@@ -1,1 +1,15 @@
+version: '1.0'
+
+services:
+  backend:
+    container_name: nginx_https
+    build: /home/dcolucci/Inception/srcs/requirements/nginx
+    image: nginx:1.0
+    ports:
+      - "443:443"
+      - "80:443"
+    networks:
+      - my-network
+
 networks:
+  my-network:
