@@ -1,15 +1,42 @@
-version: '1.0'
 
 services:
-  backend:
-    container_name: nginx_https
-    build: /home/dcolucci/Inception/srcs/requirements/nginx
+  # Nginx
+  nginx:
+    build: ./requirements/nginx
     image: nginx:1.0
+    restart: always
     ports:
       - "443:443"
       - "80:443"
+    volumes:
+      - ./requirements/wordpress:/wordpress
+    # depends_on:
+    #   - wordpress
     networks:
       - my-network
 
+  # # Wordpress with PHP-FPM
+  # wordpress:
+  #   build: ./requirements/wordpress
+  #   image: wordpress:1.0
+  #   restart: always
+  #   volumes:
+  #     - wordpress: ~/data/...
+  #   networks:
+  #     - my-network
+
+  # # MariaDB
+  # mariadb:
+  #   build: ./requirements/mariadb
+  #   image: mariadb:1.0
+  #   restart: always
+  #   volumes:
+  #     - database: ~/data/...
+
+
 networks:
   my-network:
+
+volumes:
+  wordpress:
+  database:

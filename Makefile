@@ -9,3 +9,6 @@ $(NAME): $(SRC)
 
 stop:
 	@ docker compose --project-directory $(SRC) stop
+
+down:
+	@ docker compose --project-directory $(SRC) down
