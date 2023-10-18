@@ -5,7 +5,7 @@ SRC = srcs/
 all: $(NAME)
 
 $(NAME): $(SRC)
-	@ docker compose --project-directory $(SRC) up --detach
+	@ docker compose --project-directory $(SRC) up --build --detach
 
 stop:
 	@ docker compose --project-directory $(SRC) stop

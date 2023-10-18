@@ -1,29 +1,34 @@
 
 services:
+
   # Nginx
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
     image: nginx:1.0
-    restart: always
+    restart: unless-stopped
     ports:
       - "443:443"
       - "80:443"
     volumes:
-      - ./requirements/wordpress:/wordpress
-    # depends_on:
-    #   - wordpress
+      - /home/dcolucci/data/wordpress:/var/www/wordpress
+    depends_on:
+      - wordpress
     networks:
       - my-network
 
-  # # Wordpress with PHP-FPM
-  # wordpress:
-  #   build: ./requirements/wordpress
-  #   image: wordpress:1.0
-  #   restart: always
-  #   volumes:
-  #     - wordpress: ~/data/...
-  #   networks:
-  #     - my-network
+  # Wordpress with PHP-FPM
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    image: wordpress:1.0
+    restart: unless-stopped
+    volumes:
+      - /home/dcolucci/data/wordpress:/var/www/wordpress
+    # depends_on:
+    #   - mariadb
+    networks:
+     - my-network
 
   # # MariaDB
   # mariadb:
@@ -36,7 +41,3 @@ services:
 
 networks:
   my-network:
-
-volumes:
-  wordpress:
-  database:
