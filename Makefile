@@ -12,3 +12,4 @@ stop:
 
 down:
 	@ docker compose --project-directory $(SRC) down
+

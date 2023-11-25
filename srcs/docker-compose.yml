@@ -9,9 +9,8 @@ services:
     restart: unless-stopped
     ports:
       - "443:443"
-      - "80:443"
     volumes:
-      - /home/dcolucci/data/wordpress:/var/www/wordpress
+      - wordpress-files:/var/www/wordpress
     depends_on:
       - wordpress
     networks:
@@ -24,7 +23,7 @@ services:
     image: wordpress:1.0
     restart: unless-stopped
     volumes:
-      - /home/dcolucci/data/wordpress:/var/www/wordpress
+      - wordpress-files:/var/www/wordpress
     # depends_on:
     #   - mariadb
     networks:
@@ -41,3 +40,6 @@ services:
 
 networks:
   my-network:
+
+volumes:
+  wordpress-files:
