@@ -10,7 +10,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - wordpress-files:/var/www/wordpress
+      - wp-data:/var/www/wordpress
     depends_on:
       - wordpress
     networks:
@@ -23,7 +23,7 @@ services:
     image: wordpress:1.0
     restart: unless-stopped
     volumes:
-      - wordpress-files:/var/www/wordpress
+      - wp-data:/var/www/wordpress
     # depends_on:
     #   - mariadb
     networks:
@@ -42,4 +42,10 @@ networks:
   my-network:
 
 volumes:
-  wordpress-files:
+  wp-data:
+    name: wp-data
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dcolucci/data/wordpress/
+  mariadb-data:
