@@ -24,28 +24,39 @@ services:
     restart: unless-stopped
     volumes:
       - wp-data:/var/www/wordpress
-    # depends_on:
-    #   - mariadb
+    depends_on:
+      - mariadb
     networks:
      - my-network
 
-  # # MariaDB
-  # mariadb:
-  #   build: ./requirements/mariadb
-  #   image: mariadb:1.0
-  #   restart: always
-  #   volumes:
-  #     - database: ~/data/...
-
+  # MariaDB
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb:1.0
+    restart: unless-stopped
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    networks:
+      - my-network
 
 networks:
   my-network:
+    name: my-network
 
 volumes:
+  mariadb-data:
+    name: mariadb-data
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dcolucci/data/mariadb/
+      o: bind
   wp-data:
     name: wp-data
     driver: local
     driver_opts:
       type: none
       device: /home/dcolucci/data/wordpress/
-  mariadb-data:
+      o: bind
+  
