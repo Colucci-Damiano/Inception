@@ -5,7 +5,8 @@ SRC = srcs/
 all: $(NAME)
 
 $(NAME): $(SRC)
-	@ docker compose --project-directory $(SRC) up --build -d
+	@ bash ./srcs/requirements/tools/volumes.sh
+	@ docker compose --project-directory $(SRC) up -d
 
 stop:
 	@ docker compose --project-directory $(SRC) stop

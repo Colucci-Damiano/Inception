@@ -35,6 +35,8 @@ services:
     build: ./requirements/mariadb
     image: mariadb:1.0
     restart: unless-stopped
+    ports:
+      - "3306:3306"
     volumes:
       - mariadb-data:/var/lib/mysql
     networks:
@@ -43,6 +45,7 @@ services:
 networks:
   my-network:
     name: my-network
+    driver: bridge
 
 volumes:
   mariadb-data:
