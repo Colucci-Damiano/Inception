@@ -4,7 +4,11 @@ RUN apk update && apk add mariadb mariadb-client
 
 RUN mkdir -p /run/mysqld/
 
+RUN mkdir -p /var/log/mysql/
+
 RUN chown -R mysql:mysql /run/mysqld
+
+RUN chown -R mysql:mysql /var/log/
 
 RUN chown -R mysql:mysql /var/lib/mysql
 
