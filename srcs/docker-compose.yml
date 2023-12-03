@@ -22,6 +22,10 @@ services:
     build: ./requirements/wordpress
     image: wordpress:1.0
     restart: unless-stopped
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
     volumes:
       - wp-data:/var/www/wordpress
     depends_on:
@@ -35,8 +39,10 @@ services:
     build: ./requirements/mariadb
     image: mariadb:1.0
     restart: unless-stopped
-    ports:
-      - "3306:3306"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
     volumes:
       - mariadb-data:/var/lib/mysql
     networks:

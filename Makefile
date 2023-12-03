@@ -6,7 +6,7 @@ all: $(NAME)
 
 $(NAME): $(SRC)
 	@ bash ./srcs/requirements/tools/volumes.sh
-	@ docker compose --project-directory $(SRC) up -d
+	@ docker compose --project-directory $(SRC) up -d --build
 
 stop:
 	@ docker compose --project-directory $(SRC) stop
