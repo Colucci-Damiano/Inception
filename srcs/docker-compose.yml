@@ -24,8 +24,8 @@ services:
     restart: unless-stopped
     environment:
       - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
+      - DB_USERNAME=${DB_USER}
+      - DB_USER_PASS=${DB_PASS}
     volumes:
       - wp-data:/var/www/wordpress
     depends_on:
@@ -41,8 +41,11 @@ services:
     restart: unless-stopped
     environment:
       - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
+      - DB_DEFAULT_ADMIN_NAME=${DB_DEFAULT_ADMIN_NAME}
+      - DB_ADMIN_NAME=${DB_ADMIN_NAME}
+      - DB_ADMIN_PASS=${DB_ADMIN_PASS}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_USER_PASS=${DB_USER_PASS}
     volumes:
       - mariadb-data:/var/lib/mysql
     networks:
