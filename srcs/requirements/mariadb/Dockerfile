@@ -14,6 +14,7 @@ RUN chown -R mysql:mysql /run/mysqld/; \
 
 COPY ./conf/my.cnf /etc/my.cnf.d/dcolucci.cnf
 COPY ./tools/install_db.sh /install_db.sh
+COPY ./tools/create_wordpress.sh /create_wordpress.sh
 
 # Script install_db.sh: init the database if not exists
 # Script install_wordpress_db.sh: create wordpress database, admin user and normal user if not exist.
@@ -22,6 +23,4 @@ RUN	sh /install_db.sh \
 	# && sh /install_wordpress_db.sh \
 	# && rm install_wordpress_db.sh \
 
-COPY ./tools/initdb.sh /docker-entrypoint-initdb.d/initdb.sh
-
-CMD ["mariadbd-safe", "--defaults-file=/etc/my.cnf.d/dcolucci.cnf"]
+CMD ["sh", "-c", "sh /create_wordpress.sh & mariadbd-safe --defaults-file=/etc/my.cnf.d/dcolucci.cnf"]
