@@ -1,5 +1,10 @@
 FROM alpine:3.17
 
+ARG DB_NAME
+ARG DB_ROOT_PASS
+ARG DB_USERNAME
+ARG DB_USER_PASS
+
 RUN apk update; \
  	apk add \
 	mariadb \
@@ -23,4 +28,4 @@ RUN rm /install_db.sh
 RUN sh /install_wordpress_db.sh
 RUN rm install_wordpress_db.sh 
 
-CMD ["mariadbd-safe --defaults-file=/etc/my.cnf.d/dcolucci.cnf"]
+CMD ["mariadbd-safe", "--defaults-file=/etc/my.cnf.d/dcolucci.cnf"]

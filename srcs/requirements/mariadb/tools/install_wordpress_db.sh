@@ -1,12 +1,6 @@
 #!/bin/sh
 
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
-
-echo "DB_ROOT_PASS: $DB_ROOT_PASS"
-echo "DB_NAME: $DB_NAME"
-echo "DB_USERNAME: $DB_USERNAME"
-echo "DB_USER_PASS: $DB_USER_PASS"
-
 cat << EOF > /file.sql
 USE mysql;
 FLUSH PRIVILEGES;
@@ -21,4 +15,5 @@ GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USERNAME'@'%';
 FLUSH PRIVILEGES;
 EOF
 mariadbd --defaults-file=/etc/my.cnf.d/dcolucci.cnf --bootstrap < /file.sql
+rm -rf /file.sql
 fi

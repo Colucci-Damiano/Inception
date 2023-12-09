@@ -35,16 +35,16 @@ services:
 
   # MariaDB
   mariadb:
-    container_name: mariadb
+    container_name: mariadb 
     build:
       context: ./requirements/mariadb
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_ROOT_PASS: ${DB_ROOT_PASS}
+        DB_USERNAME: ${DB_USERNAME}
+        DB_USER_PASS: ${DB_USER_PASS}
     image: mariadb:1.0
     restart: unless-stopped
-    environment:
-      DB_NAME: ${DB_NAME}
-      DB_ROOT_PASS: ${DB_ROOT_PASS}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_USER_PASS: ${DB_USER_PASS}
     volumes:
       - mariadb-data:/var/lib/mysql
     networks:
