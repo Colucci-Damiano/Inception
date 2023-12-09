@@ -36,17 +36,15 @@ services:
   # MariaDB
   mariadb:
     container_name: mariadb
-    build: ./requirements/mariadb
+    build:
+      context: ./requirements/mariadb
     image: mariadb:1.0
     restart: unless-stopped
     environment:
-      - DB_NAME=${DB_NAME}
-      - DB_DEFAULT_ADMIN_NAME=${DB_DEFAULT_ADMIN_NAME}
-      - DB_ADMIN_NAME=${DB_ADMIN_NAME}
-      - DB_ADMIN_PASS=${DB_ADMIN_PASS}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_USER_PASS=${DB_USER_PASS}
-    # command: --init-file /docker-entrypoint-initdb.d/init.sql
+      DB_NAME: ${DB_NAME}
+      DB_ROOT_PASS: ${DB_ROOT_PASS}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_USER_PASS: ${DB_USER_PASS}
     volumes:
       - mariadb-data:/var/lib/mysql
     networks:
