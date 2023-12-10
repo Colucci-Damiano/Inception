@@ -15,12 +15,8 @@ RUN mkdir -p /var/www/
 
 COPY ./conf/www.conf /etc/php81/php-fpm.d/www.dcolucci.42.fr.conf
 
-WORKDIR /var/www/
+COPY ./tools/install_wordpress.sh /install_wordpress.sh
 
-RUN wget https://wordpress.org/latest.tar.gz \
-	&& tar -xzvf latest.tar.gz \
-	&& rm latest.tar.gz
-
-COPY ./conf/wp-config.php ./wordpress/
+RUN sh /install_wordpress.sh && rm /install_wordpress.sh
 
 CMD ["php-fpm81", "--nodaemonize"]

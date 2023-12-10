@@ -9,6 +9,6 @@ RUN openssl req -x509 -nodes -newkey rsa:2048 \
 	-out /etc/ssl/certs/localhost.crt \
 	-subj "/C=IT/ST=Florence/L=Florence/O=42Firenze/OU=42Cursus/CN=DAM"
 
-COPY conf/default.conf /etc/nginx/http.d/www.dcolucci.42.fr.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

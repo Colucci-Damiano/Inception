@@ -19,13 +19,14 @@ services:
   # Wordpress with PHP-FPM
   wordpress:
     container_name: wordpress
-    build: ./requirements/wordpress
+    build: 
+      context: ./requirements/wordpress
+      args:
+        - DB_NAME=${DB_NAME}
+        - DB_USERNAME=${DB_USERNAME}
+        - DB_USER_PASS=${DB_USER_PASS}
     image: wordpress:1.0
     restart: unless-stopped
-    environment:
-      - DB_NAME=${DB_NAME}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_USER_PASS=${DB_USER_PASS}
     volumes:
       - wp-data:/var/www/wordpress
     depends_on:
