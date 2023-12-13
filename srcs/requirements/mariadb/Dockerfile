@@ -22,9 +22,9 @@ COPY ./tools/install_db.sh /install_db.sh
 COPY ./tools/install_wordpress_db.sh /install_wordpress_db.sh
 
 # Script install_db.sh: init the database if not exists
-# Script install_wordpress_db.sh: create wordpress database, admin user and normal user if not exist.
 RUN	sh /install_db.sh
 RUN rm /install_db.sh
+# Script install_wordpress_db.sh: create wordpress database, admin user and normal user if not exist.
 RUN sh /install_wordpress_db.sh
 RUN rm install_wordpress_db.sh 
 

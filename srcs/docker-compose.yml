@@ -1,39 +1,6 @@
 
 services:
 
-  # Nginx
-  nginx:
-    container_name: nginx
-    build: ./requirements/nginx
-    image: nginx:1.0
-    restart: unless-stopped
-    ports:
-      - "443:443"
-    volumes:
-      - wp-data:/var/www/wordpress
-    depends_on:
-      - wordpress
-    networks:
-      - my-network
-
-  # Wordpress with PHP-FPM
-  wordpress:
-    container_name: wordpress
-    build: 
-      context: ./requirements/wordpress
-      args:
-        - DB_NAME=${DB_NAME}
-        - DB_USERNAME=${DB_USERNAME}
-        - DB_USER_PASS=${DB_USER_PASS}
-    image: wordpress:1.0
-    restart: unless-stopped
-    volumes:
-      - wp-data:/var/www/wordpress
-    depends_on:
-      - mariadb
-    networks:
-     - my-network
-
   # MariaDB
   mariadb:
     container_name: mariadb 
@@ -48,6 +15,44 @@ services:
     restart: unless-stopped
     volumes:
       - mariadb-data:/var/lib/mysql
+    networks:
+      - my-network
+
+  # Wordpress with PHP-FPM
+  wordpress:
+    container_name: wordpress
+    build: 
+      context: ./requirements/wordpress
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_USERNAME: ${DB_USERNAME}
+        DB_USER_PASS: ${DB_USER_PASS}
+        DOMAIN_NAME: ${DOMAIN_NAME}
+    environment:
+      - WP_USERNAME=${WP_USERNAME}
+      - WP_USER_PASS=${WP_USER_PASS}
+    image: wordpress:1.0
+    restart: unless-stopped
+    volumes:
+      - wp-data:/var/www/wordpress
+    depends_on:
+      mariadb:
+        condition: service_started
+    networks:
+     - my-network
+
+  # Nginx
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    image: nginx:1.0
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - wp-data:/var/www/wordpress
+    depends_on:
+      - wordpress
     networks:
       - my-network
 

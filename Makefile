@@ -17,3 +17,5 @@ clean:
 fclean: clean
 	@ docker compose --project-directory $(SRC) down -v --rmi all
 	@ sudo rm -rf /home/dcolucci/data
+
+re: fclean all
