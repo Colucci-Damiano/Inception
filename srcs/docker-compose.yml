@@ -28,10 +28,10 @@ services:
         DB_USERNAME: ${DB_USERNAME}
         DB_USER_PASS: ${DB_USER_PASS}
         DOMAIN_NAME: ${DOMAIN_NAME}
+    image: wordpress:1.0
     environment:
       - WP_USERNAME=${WP_USERNAME}
       - WP_USER_PASS=${WP_USER_PASS}
-    image: wordpress:1.0
     restart: unless-stopped
     volumes:
       - wp-data:/var/www/wordpress
@@ -44,15 +44,42 @@ services:
   # Nginx
   nginx:
     container_name: nginx
-    build: ./requirements/nginx
     image: nginx:1.0
-    restart: unless-stopped
+    build:
+      context: ./requirements/nginx
     ports:
       - "443:443"
     volumes:
       - wp-data:/var/www/wordpress
     depends_on:
       - wordpress
+    networks:
+      - my-network
+    restart: unless-stopped
+
+  # Static website
+  website:
+    container_name: website
+    build: ./requirements/bonus/static_website
+    image: webiste:1.0
+    restart: unless-stopped
+    ports:
+      - "80:80"
+
+  # Ftp server
+  ftp:
+    container_name: ftp
+    build: 
+      context: ./requirements/bonus/ftp
+      args:
+        - FTP_USER=${FTP_USER}
+        - FTP_PASS=${FTP_PASS}
+    image: ftp:1.0
+    restart: unless-stopped
+    ports:
+      - "21:21"
+    volumes:
+      - wp-data:/var/www/wordpress
     networks:
       - my-network
 

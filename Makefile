@@ -19,3 +19,5 @@ fclean: clean
 	@ sudo rm -rf /home/dcolucci/data
 
 re: fclean all
+
+.PHONY: all stop clean fclean re
