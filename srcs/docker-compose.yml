@@ -16,7 +16,7 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
     networks:
-      - my-network
+      - inception-network
 
   # Wordpress with PHP-FPM
   wordpress:
@@ -39,7 +39,7 @@ services:
       mariadb:
         condition: service_started
     networks:
-     - my-network
+     - inception-network
 
   # Nginx
   nginx:
@@ -47,6 +47,7 @@ services:
     image: nginx:1.0
     build:
       context: ./requirements/nginx
+    restart: unless-stopped
     ports:
       - "443:443"
     volumes:
@@ -54,8 +55,7 @@ services:
     depends_on:
       - wordpress
     networks:
-      - my-network
-    restart: unless-stopped
+      - inception-network
 
   # Static website
   website:
@@ -82,11 +82,25 @@ services:
     volumes:
       - wp-data:/var/www/wordpress
     networks:
-      - my-network
+      - inception-network
+
+  # Adminer
+  adminer:
+    container_name: adminer
+    build:
+      context: ./requirements/bonus/adminer
+    image: adminer:1.0
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+    networks:
+      - inception-network
 
 networks:
-  my-network:
-    name: my-network
+  inception-network:
+    name: inception-network
     driver: bridge
 
 volumes:
