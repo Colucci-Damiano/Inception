@@ -21,7 +21,7 @@ services:
   # Wordpress with PHP-FPM
   wordpress:
     container_name: wordpress
-    build: 
+    build:
       context: ./requirements/wordpress
       args:
         DB_NAME: ${DB_NAME}
@@ -30,13 +30,18 @@ services:
         DOMAIN_NAME: ${DOMAIN_NAME}
     image: wordpress:1.0
     environment:
+      - DB_USERNAME=${DB_USERNAME}
       - WP_USERNAME=${WP_USERNAME}
       - WP_USER_PASS=${WP_USER_PASS}
+      - WP_ADMIN=${WP_ADMIN}
+      - WP_PASS=${WP_PASS}
     restart: unless-stopped
     volumes:
       - wp-data:/var/www/wordpress
     depends_on:
       mariadb:
+        condition: service_started
+      redis:
         condition: service_started
     networks:
      - inception-network
@@ -110,6 +115,18 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - inception-network
+
+  # Redis
+  redis:
+    container_name: redis
+    build:
+      context: requirements/bonus/redis
+    image: redis:1.0
+    ports:
+     - "6379:6379"
+    networks:
+      - inception-network
+    restart: unless-stopped
 
 networks:
   inception-network:
