@@ -98,6 +98,19 @@ services:
     networks:
       - inception-network
 
+  # Portainer
+  portainer:
+    container_name: portainer
+    build:
+      context: ./requirements/bonus/portainer
+    image: portainer:1.0
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - inception-network
+
 networks:
   inception-network:
     name: inception-network
