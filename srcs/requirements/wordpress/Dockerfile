@@ -27,4 +27,4 @@ COPY ./tools/init.sh /init.sh
 
 RUN sh /install_wordpress.sh && rm /install_wordpress.sh
 
-CMD ["sh", "/init.sh"]
+ENTRYPOINT ["sh", "/init.sh"]

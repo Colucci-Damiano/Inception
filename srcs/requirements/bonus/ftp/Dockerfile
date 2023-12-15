@@ -7,12 +7,13 @@ RUN apk update && apk add vsftpd
 
 RUN mkdir -p /var/log/vsftpd
 
-RUN adduser -D ${FTP_USER} && \
-	echo "${FTP_USER}:${FTP_PASS}" | chpasswd
-
 RUN mkdir -p /var/www/wordpress
 
-RUN chown -R ${FTP_USER} /var/www/wordpress
+RUN adduser -h /var/www/wordpress -D ${FTP_USER} && \
+	echo "${FTP_USER}:${FTP_PASS}" | chpasswd
+
+RUN chown -R ${FTP_USER}: /var/www/wordpress/; \
+	chown -R ${FTP_USER}: /var/log/vsftpd/
 
 COPY ./conf/vsftpd.conf /etc/vsftpd/vsftpd.conf
 
