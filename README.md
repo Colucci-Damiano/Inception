@@ -1,10 +1,10 @@
 
-Project Title: Docker Infrastructure Setup
+#INCEPTION (42 school)
 
-Overview
+##Overview
 This project focuses on setting up a small-scale infrastructure using Docker containers and Docker Compose. The infrastructure includes essential services like NGINX, WordPress with php-fpm, and MariaDB. The goal is to adhere to specific guidelines and requirements outlined in the project subject while ensuring the robustness and security of the setup.
 
-Project Structure
+##Project Structure
 The project follows a structured approach to organization and implementation:
 
 srcs: Contains all configuration files and Docker-related resources.
